@@ -19,7 +19,7 @@ func AuthMW(next http.HandlerFunc) http.HandlerFunc {
 			json.NewEncoder(w).Encode("Unauthorized")
 			return
 		}
-		claim, err := validateToken(tokenString)
+		claim, err := ValidateToken(tokenString)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(w).Encode("Incorrect Token")
@@ -37,7 +37,7 @@ type JWTClaim struct {
 	jwt.StandardClaims
 }
 
-func validateToken(signedToken string) (*JWTClaim, error) {
+func ValidateToken(signedToken string) (*JWTClaim, error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&JWTClaim{},
