@@ -1,6 +1,8 @@
 package database
 
 import (
+	"errors"
+
 	"github.com/Aitugan/Techt/entity"
 	"github.com/google/uuid"
 )
@@ -50,3 +52,20 @@ var users []*entity.User = []*entity.User{
 	},
 }
 
+func GetUsersDatabase() []*entity.User {
+	return users
+}
+func AddUserIntoDatabase(user *entity.User) []*entity.User {
+	users = append(users, user)
+	return users
+}
+
+func RemoveUserFromDatabase(id uuid.UUID) error {
+	for i, user := range users {
+		if user.Id == id {
+			users = append(users[:i], users[i+1:]...)
+			return nil
+		}
+	}
+	return errors.New("Not Found")
+}

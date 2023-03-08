@@ -1,6 +1,8 @@
 package database
 
 import (
+	"errors"
+
 	"github.com/Aitugan/Techt/entity"
 	"github.com/google/uuid"
 )
@@ -44,3 +46,21 @@ var books []*entity.Book = []*entity.Book{
 	},
 }
 
+func GetBooksDatabase() []*entity.Book {
+	return books
+}
+
+func AddBookIntoDatabase(book *entity.Book) []*entity.Book {
+	books = append(books, book)
+	return books
+}
+
+func RemoveBookFromDatabase(id uuid.UUID) error {
+	for i, book := range books {
+		if book.Id == id {
+			books = append(books[:i], books[i+1:]...)
+			return nil
+		}
+	}
+	return errors.New("Not Found")
+}
