@@ -10,3 +10,9 @@ type Book struct {
 	Author          string    `json:"author,omitempty"`
 	PublicationDate string    `json:"publicationDate,omitempty"`
 }
+
+type BookUpdate struct {
+	Title           *string `json:"title,omitempty"`
+	Author          *string `json:"author,omitempty"`
+	PublicationDate *string `json:"publicationDate,omitempty"`
+}
